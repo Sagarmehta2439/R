@@ -1,0 +1,238 @@
+---
+title: "Data manipulation(Rprogramming)"
+author: "SAGAR MEHTA"
+date: "14/05/2020"
+output: html_document
+---
+
+
+
+1.Load the required libraries and the data.
+```{r}
+housing_data <- read.csv('housingdata_v2.0.csv')
+library(dplyr)
+```
+
+
+
+2.Understand the data structure and provide concise summary on the following –•no of observations•total number of variables•number of continuous variables•number of categorical variables
+```{r}
+head(housing_data)
+nrow(housing_data)
+ncol(housing_data)
+dim(housing_data)
+class(housing_data)
+str(housing_data)
+
+```
+
+3.Select and Mutate : use the select() and mutate() functions in R to answer the following •Select the columns Gender, Education, and Income and print the first five rows•Select the columns from Gender to Loan Period and print the first five rows•Be concise! -select columns by removing Record Column and Gender and print the first five rows•Use mutate() function to add the new variables var1 which calculates the ratio of property value to total income and save the result as g1. Print the first five rows.•Add the new variable var2 which returns the ratio of property value to loan period and save the result as g2. Print the first five rows.
+
+#Select the columns Gender, Education, and Income and print the first five rows
+```{r}
+housing_gei <- housing_data%>%select(Gender,Education,Income)
+head(housing_gei)
+```
+
+#Select the columns from Gender to Loan Period and print the first five rows
+```{r}
+housing_glp <- housing_data%>%select(Gender:Loan_Period)
+head(housing_glp)
+```
+
+
+#Be concise! -select columns by removing Record Column and Gender and print the first five rows
+```{r}
+housing_rcg <- housing_data%>%select(3:11)
+head(housing_rcg)
+```
+
+#Use mutate() function to add the new variables var1 which calculates the ratio of property value to total income and save the result as g1. Print the first five rows.
+```{r}
+g1 <- housing_data%>%mutate(var1 = PropertyValue/Income)
+head(g1)
+```
+
+#Add the new variable var2 which returns the ratio of property value to loan period and save the result as g2. Print the first five rows.
+```{r}
+g2 <- housing_data%>%mutate(var2 = PropertyValue/Loan_Period)
+head(g2)
+```
+
+4.Filter and Arrange: •Filter all the observations that have Property Value lower than 80000 or higher than 150000 and store it in df g3. Print the first five rows. How many observations are there.•Filter all the observations that have Property Value > 1000000 and Income < 3185 and store it in df g4. Print the first five rows. How many observations are there.•Filter all observations where Income< 3185 and still Property was purchased. How many such records are there in the data set. Print the first five rows.Use the arrange() function in dplyr to -: •Create a data frame by the name ‘bought’ –which includes observations when the Property was purchased. How many observations are there.•Arrange the data frame bought by Income and print the first five rows.•Arrange the data frame bought by Gender and print the first five rows.•Arrange the data frame bought so that Gender and Education is grouped and print the first five rows.•Create a data frame by the name ‘notbought’ –which includes observations when the Property was not purchased. How many observations are there.•Arrange the data frame notbought by Income and print the first five rows.•Arrange the data frame notbought by Gender and print the first five rows.•Arrange the data frame notbought so that Gender and Education is grouped and print the first five rows.•Reverse the order of arranging -Arrange the housing data according to Gender and decreasing Income. Print the first five rows.
+
+
+# Filter all the observations that have Property Value lower than 80000 or higher than 150000 and store it in df g3. Print the first five rows. How many observations are there.
+```{r}
+g3 <- housing_data%>%filter(PropertyValue<80000|PropertyValue>150000)
+head(g3)
+dim(g3)
+```
+
+#Filter all the observations that have Property Value > 1000000 and Income < 3185 and store it in df g4. Print the first five rows. How many observations are there
+
+```{r}
+g4 <- housing_data%>%filter(PropertyValue > 1000000 & Income < 3185)
+head(g4)
+dim(g4)
+```
+
+
+
+
+#Filter all observations where Income< 3185 and still Property was purchased. How many such records are there in the data set. Print the first five rows.
+```{r}
+g5 <- housing_data%>%filter(Income < 3185 & Property_Purchased == 'Y')
+head(g5)
+dim(g5)
+```
+
+
+
+#Use the arrange() function in dplyr to -: •Create a data frame by the name ‘bought’ –which includes observations when the Property was purchased. How many observations are there.
+
+```{r}
+bought_property <- housing_data%>%filter(Property_Purchased == 'Y')
+head(bought_property)
+
+```
+
+#Arrange the data frame bought by Income and print the first five rows.
+```{r}
+by_income <- bought_property%>%arrange(Income)
+head(by_income)
+
+```
+
+
+#Arrange the data frame bought by Gender and print the first five rows.
+```{r}
+by_gender <- bought_property%>%arrange(Gender)
+head(by_gender)
+```
+
+```{r}
+by_education <- bought_property%>%arrange(Gender,Education)
+head(by_education)
+```
+
+
+#Create a data frame by the name ‘notbought’ –which includes observations when the Property was not purchased. How many observations are there.
+```{r}
+notbought <- housing_data%>%filter(Property_Purchased == 'N')
+head(notbought)
+nrow(notbought)
+
+```
+
+
+#Arrange the data frame notbought by Income and print the first five rows.
+```{r}
+by_incomenb <- notbought%>%arrange(Income)
+head(by_incomenb)
+```
+
+#Arrange the data frame notbought by Gender and print the first five rows.
+
+```{r}
+by_gendernb <- notbought%>%arrange(Gender)
+head(by_gendernb)
+```
+
+#Arrange the data frame notbought so that Gender and Education is grouped and print the first five rows.
+```{r}
+by_educationnb <- bought_property%>%arrange(Gender,Education)
+head(by_educationnb)
+
+```
+
+#Reverse the order of arranging -Arrange the housing data according to Gender and decreasing Income. Print the first five rows.
+```{r}
+by_reverse <- notbought%>%arrange(Gender,desc(Income))
+head(by_reverse)
+
+```
+
+
+
+5.Summarise function: •Print out a summary with variables min_income and max_income.•Generate summary statistics about Income column of housing dataframe. The summary should print minimum, maximum, average, standard deviation, and IQR of the variable.•Generate summary about PropertyValue column of housing. The output should print minimum, maximum, average, standard deviation, and IQR of the variable.•Generate summary about Loan_Periodcolumn of housing. The output should print minimum, maximum, average, standard deviation, and IQR of the variable.
+
+Print out a summary with variables min_income and max_income.
+```{r}
+max_income <- housing_data%>%summarise(max(Income))
+max_income
+min_income <- housing_data%>%summarise(min(Income))
+min_income
+```
+#Generate summary statistics about Income column of housing dataframe. The summary should print minimum, maximum, average, standard deviation, and IQR of the variable.
+```{r}
+summary(housing_data$Income)
+```
+#Generate summary about PropertyValue column of housing. The output should print minimum, maximum, average, standard deviation, and IQR of the variable
+```{r}
+summary(housing_data$Income)
+
+```
+#Generate summary about Loan_Periodcolumn of housing. The output should print minimum, maximum, average, standard deviation, and IQR of the variable.
+```{r}
+summary(housing_data$Loan_Period)
+
+```
+
+
+
+6.the pipe operator of dplyr: reproduce the below steps using dplyr and pipe operator•Start with the housing data set and then•Add the new variable var1 which calculates the ratio of property value to total income•Pick all-of the rows whose var1 value exceeds 50, and then•Summarize the data set with a value named avg. that is the mean value of var1.•Finally report the output of the above steps.
+
+```{r}
+housing_data%>%mutate(var1 = PropertyValue/Income)%>%filter(var1 > 50)%>%summarise(mean(var1))
+
+
+
+```
+
+7.using group_by function of dplyr: reproduce the below steps •Start with the housing data set and then Use group_by() to group housing by Education.•summarise() the grouped df with two summary variables: avg_income, the average of Income, and avg_Value, the average value of purchased property. •Finally, order the summary from low to high by these two summarized variables•Finally report the output of the above steps.
+
+```{r}
+housing_data%>%group_by(Education)%>%summarise(avg_income = mean(Income), avg_value = mean(PropertyValue))%>%arrange(desc(avg_income),desc(avg_value))
+
+
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

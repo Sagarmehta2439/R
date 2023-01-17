@@ -1,0 +1,116 @@
+---
+title: "EdurekaRprogramiing1"
+author: "SAGAR MEHTA"
+date: "06/05/2020"
+output: html_document
+---
+
+
+1.Create a vector “Random” which comprises of ten observations, whose:•First three observations are normally distributed random numbers with mean ‘5’ and standard deviation ‘1’•Next three observations are normally distributed random numbers with mean ‘3’ and standard deviation ‘3’•Last four observations are normally distributed random numbers with mean ‘1’and standard deviation ‘4’
+
+
+```{r}
+set.seed(1)
+Random <- c(1,2,3,4,5,6,7,8,9,0)
+Random[1:3] <- rnorm(3,mean = 5,sd = 1)
+Random[4:6] <- rnorm(3,mean = 3,sd = 3)
+Random[7:10] <- rnorm(4,mean = 1,sd = 4)
+Random <- round(Random,2)
+Random
+```
+
+2.Create a vector “LogExpo” which comprises of ten observations, where:•First five observations are log values of the first five natural numbers •Next five observations are exponentiation values of next five natural numbers
+
+```{r}
+
+rand_log <- c(1,2,3,4,5,6,7,8,9,0)
+rand_log[1:5] <- log(rand_log[1:5])
+rand_log[6:10] <- dexp(rand_log[6:10],rate = 1,log = F)
+rand_log
+```
+
+
+3.Add two vectors “Thousand” and “Negative_thousand”, where:•  Vector “Negative_thousand” is a sequence of integers from ‘-1000’ to ‘0’•Vector “Thousand” is a sequence of integers from ‘0’ to ‘1000’
+
+```{r}
+
+negative_thousand <- seq(-1000,0)
+negative_thousand
+thousand <- seq(0,1000)
+thousand
+```
+
+.Store the above result in a new vector and name it as “Final_Thousand”. From this data-set:•Select the 500th observation•Extract the first hundred observations and store them in a new vector “First_Hundred, Extract the last hundred observations and store them in a new vector “Last_Hundred”•Extract all the elements from 321st observation to 764th observation and store them in a new vector “Weird_Set”
+
+```{r}
+final_thousand <- c(negative_thousand,thousand)
+head(final_thousand)
+final_thousand[500]
+first_hundred <- final_thousand[1:100]
+first_hundred
+last_hundred <- final_thousand[1902:2002]
+last_hundred
+Weird_Set <- final_thousand[321:764]
+Weird_Set
+
+
+
+
+```
+
+
+
+
+
+
+```{r}
+book_details <- list(Book_name =c("Business Analytics","R for data science","Python crash course","Introduction to statistical learning","Machine learning for dummies"),
+                     Author_name = c("Dinesh Kumar","Hadley Wickham","Eric Matthes","Gareth James","John Paul Mueller"),
+                     Book_cost = c(700,1200,1800,2500,500))
+book_details
+```
+
+
+
+6.From the above list:•Extract all the three individual vectors by their name•Extract the name of fourth book•Extract the name of second author•Extract the cost of last book
+```{r}
+book_details$Book_name
+book_details$Author_name
+book_details$Book_cost
+book_details$Book_name[4]
+book_details[[2]][2]
+book_details[[3]][5]
+
+
+```
+
+7.Load the inbuilt data-set “women” by using the “data()” command. From this data-set:•Extract the observation which is present at 6th row, 2nd column•Extract the last four rows of the data-set•Extract alternate rows from the data-set
+
+```{r}
+data("women")
+head(women)
+women[6,2]
+dim(women)
+women[12:15,]
+alternate <- women[c(1,3,5,7,9,11,13,15),]
+alternate
+```
+
+8.Create a “Student” dataset with a minimum of ten rows, which comprises of:•‘Name’-Name of the student•‘Department’-Department of the student•’CGPA’-CGPA of the student•‘Placement’-Is the student placed or not(Boolean values)
+```{r}
+
+student <- data.frame(Name = c("Kepa","Marcos","Kurt","Toni","Cesar","Mason","Mateo","Tammy","Michy","Oliver"),
+                      Department = c("Mechanical","Electrical","Civil","Environment","DataScience","Computer Science","Telecommunication","Textile","Chemical","IT"),
+                      CGPA = c(8,7,9,7,5,9,8,3,8,6),
+                      Placement = c(T,F,F,F,T,T,F,T,F,F))
+student
+```
+
+
+
+
+
+
+
+
+
